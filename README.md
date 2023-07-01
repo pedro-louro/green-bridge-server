@@ -159,6 +159,7 @@ MVP: Customer, stores, GPS (filter by near By)
   store: { type: Schema.Types.ObjectId, ref: 'Task' },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   products: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
+  status: {type: String, enum: ['new', 'preparing', 'ready', 'delivering', "delivered"]}
 }
 ```
 
