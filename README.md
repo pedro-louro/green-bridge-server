@@ -38,13 +38,15 @@ MVP: Customer, stores, GPS (filter by near By)
 | `/tournament/players/:id`    | PlayerDetailsPage    | user only `<PrivateRoute>` | Single player details.                                    |
 | `/rankings/:tournamentId`    | RankingsPage         | user only `<PrivateRoute>` | Tournament rankings list.                                 | -->
 
-## Components
+## Pages
 
-Pages:
+### Auth Pages
 
 - LoginPage
 
 - SignupPage
+
+### Client Pages
 
 - HomePage
 
@@ -52,21 +54,53 @@ Pages:
 
 - EditProfilePage
 
-<!-- - CreateTournamentPage
+- List Stores
 
-- TournamentListPage
+- Store details
 
-- TournamentDetailsPage
+- My orders
 
-- PlayerDetailsPage
+### Store Pages
 
-- RankingsPage -->
+- My Store
 
-Components:
+- Edit Store
 
-<!-- - PlayerCard
-- TournamentCard
-- Navbar -->
+- Add product/ad to sell
+
+- Edit product/ad
+
+- My Store orders
+
+### Driver Pages
+
+- LoginPage
+
+- SignupPage
+
+- ProfilePage
+
+- EditProfilePage
+
+- List of orders to deliver
+
+- My deliveries
+
+## Components:
+
+- Navbar
+
+- User profile card
+
+- Product/Ad card
+
+- Add Product/Ad card
+
+- Order Card
+
+- Is Private
+
+- Is Anon
 
 # Server / Backend
 
@@ -76,35 +110,57 @@ Components:
 
 ```javascript
 {
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-	playerProfile: { type: Schema.Types.ObjectId, ref:'Player' },
-  createdTournaments: [ { type: Schema.Types.ObjectId, ref:'Tournament' } ]
+  email: {
+      type: String,
+      required: [true, "Email is required."],
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required."],
+    },
+    name: {
+      type: String,
+      required: [true, "Name is required."],
+    },
+    isDriver:{type: Boolean}
 }
 ```
 
-<!-- **Tournament model**
+**Store model**
 
 ```javascript
  {
    name: { type: String, required: true },
    img: { type: String },
-   players: [ { type: Schema.Types.ObjectId, ref:'Player' } ],
-   games: [],
-   rankings: []
+   user: { type: Schema.Types.ObjectId, ref:'User' },
+   products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+   orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
  }
 ```
 
-**Player model**
+**Product Model**
+
+```javascript
+ {
+   name: { type: String, required: true },
+   img: { type: String },
+   store: { type: Schema.Types.ObjectId, ref:'Store' },
+   order: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
+ }
+```
+
+**Order model**
 
 ```javascript
 {
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  profileImage: { type: String },
-  scores: []
+  store: { type: Schema.Types.ObjectId, ref: 'Task' },
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  products: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
 }
-``` -->
+```
 
 <br>
 
@@ -157,15 +213,15 @@ Components:
 
 ### Trello/Kanban
 
-[Link to your trello board](https://trello.com/b/PBqtkUFX/curasan) or a picture of your physical board
+[Link to your trello board](https://trello.com/b/xIR9t7e0/plant-delivery) or a picture of your physical board
 
 ### Git
 
 The url to your repository and to your deployed project
 
-[Client repository Link](https://github.com/screeeen/project-client)
+[Client repository Link](https://github.com/pedro-louro/green-bridge-client)
 
-[Server repository Link](https://github.com/screeeen/project-server)
+[Server repository Link](https://github.com/pedro-louro/green-bridge-server)
 
 [Deployed App Link](http://heroku.com)
 
