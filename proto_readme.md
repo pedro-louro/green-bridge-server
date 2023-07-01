@@ -25,7 +25,7 @@ MVP: Customer, stores, GPS (filter by near By)
 
 ## React Router Routes (React App)
 
-| Path                         | Component            | Permissions                | Behavior                                                  |
+<!-- | Path                         | Component            | Permissions                | Behavior                                                  |
 | ---------------------------- | -------------------- | -------------------------- | --------------------------------------------------------- |
 | `/login`                     | LoginPage            | anon only `<AnonRoute>`    | Login form, navigates to home page after login.           |
 | `/signup`                    | SignupPage           | anon only `<AnonRoute>`    | Signup form, navigates to home page after signup.         |
@@ -36,7 +36,7 @@ MVP: Customer, stores, GPS (filter by near By)
 | `/tournaments`               | TournamentListPage   | user only `<PrivateRoute>` | Tournaments list.                                         |
 | `/tournaments/:tournamentId` | TournamentDetailPage | user only `<PrivateRoute>` | Tournament details. Shows players list and other details. |
 | `/tournament/players/:id`    | PlayerDetailsPage    | user only `<PrivateRoute>` | Single player details.                                    |
-| `/rankings/:tournamentId`    | RankingsPage         | user only `<PrivateRoute>` | Tournament rankings list.                                 |
+| `/rankings/:tournamentId`    | RankingsPage         | user only `<PrivateRoute>` | Tournament rankings list.                                 | -->
 
 ## Components
 
@@ -52,7 +52,7 @@ Pages:
 
 - EditProfilePage
 
-- CreateTournamentPage
+<!-- - CreateTournamentPage
 
 - TournamentListPage
 
@@ -60,13 +60,13 @@ Pages:
 
 - PlayerDetailsPage
 
-- RankingsPage
+- RankingsPage -->
 
 Components:
 
-- PlayerCard
+<!-- - PlayerCard
 - TournamentCard
-- Navbar
+- Navbar -->
 
 # Server / Backend
 
@@ -83,7 +83,7 @@ Components:
 }
 ```
 
-**Tournament model**
+<!-- **Tournament model**
 
 ```javascript
  {
@@ -104,30 +104,48 @@ Components:
   profileImage: { type: String },
   scores: []
 }
-```
+``` -->
 
 <br>
 
 ## API Endpoints (backend routes)
 
-| HTTP Method | URL                      | Request Body                      | Success status | Error Status | Description                                                                                                                     |
-| ----------- | ------------------------ | --------------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| POST        | `/auth/signup`           | {name, email, password}           | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
-| POST        | `/auth/login`            | {username, password}              | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
-| GET         | `/api/stores`            |                                   |                | 400          | Show all available stores                                                                                                       |
-| GET         | `/api/stores/:id`        |                                   |                |              | Show specific store                                                                                                             |
-| POST        | `/api/stores`            | { name, img, location, products } | 201            | 400          | Create and save a new store                                                                                                     |
-| PUT         | `/api/stores/:id`        | { name, img, location, products } | 200            | 400          | edit the store                                                                                                                  |
-| POST        | `/api/stores/:id/orders` | {products, customer}              |                |              | Place an order                                                                                                                  |
-| GET         | `/api/stores/:id/orders` |                                   |                |              | List all orders for the store                                                                                                   |
-| GET         | `/api/order/:id`         |                                   |                |              | List details of an order                                                                                                        |
-| DELETE      | `/api/order/:id`         |                                   |                |              | Delete Order                                                                                                                    |
-| DELETE      | `/api/stores/:id`        |                                   | 201            | 400          | delete store                                                                                                                    |
-| GET         | `/api/customer/:id`      |                                   |                |              | show the customer profile details                                                                                               |
-| PUT         | `/api/customer/:id`      | { name, img, location }           | 200            | 404          | Update the customer profile details                                                                                             |
-| DELETE      | `/api/customer/:id`      |                                   | 200            | 400          | customer account                                                                                                                |
-| GET         | `/api/driver`            |                                   | 201            | 400          | show driver profile details                                                                                                     |
-| PUT         | `/api/driver/:id`        | { name, img, location }           | 200            | 404          | Update the driver profile details                                                                                               |
+### Auth
+
+| HTTP Method | URL            | Request Body            | Success status | Error Status | Description                                                                                                                     |
+| ----------- | -------------- | ----------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| POST        | `/auth/signup` | {name, email, password} | 200            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
+| POST        | `/auth/login`  | {username, password}    | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
+
+### Stores
+
+| HTTP Method | URL                      | Request Body                      | Success status | Error Status | Description                   |
+| ----------- | ------------------------ | --------------------------------- | -------------- | ------------ | ----------------------------- |
+| GET         | `/api/stores`            |                                   |                | 400          | Show all available stores     |
+| GET         | `/api/stores/:id`        |                                   |                |              | Show specific store           |
+| POST        | `/api/stores`            | { name, img, location, products } | 201            | 400          | Create and save a new store   |
+| PUT         | `/api/stores/:id`        | { name, img, location, products } | 200            | 400          | edit the store                |
+| POST        | `/api/stores/:id/orders` | {products, customer, store}       |                |              | Place an order                |
+| GET         | `/api/stores/:id/orders` |                                   |                |              | List all orders for the store |
+
+### Orders
+
+| HTTP Method | URL                   | Request Body            | Success status | Error Status | Description                         |
+| ----------- | --------------------- | ----------------------- | -------------- | ------------ | ----------------------------------- |
+| GET         | `/api/orders/:id`     |                         |                |              | List details of an order            |
+| GET         | `/api/orders/:status` | {order_status}          |                |              | List all orders for the drivers     |
+| DELETE      | `/api/orders/:id`     |                         |                |              | Delete Order                        |
+| DELETE      | `/api/stores/:id`     |                         | 201            | 400          | delete store                        |
+| GET         | `/api/customer/:id`   |                         |                |              | show the customer profile details   |
+| PUT         | `/api/customer/:id`   | { name, img, location } | 200            | 404          | Update the customer profile details |
+
+### Driver
+
+| HTTP Method | URL               | Request Body            | Success status | Error Status | Description                       |
+| ----------- | ----------------- | ----------------------- | -------------- | ------------ | --------------------------------- |
+| GET         | `/api/driver`     |                         | 201            | 400          | show driver profile details       |
+| PUT         | `/api/driver/:id` | { name, img, location } | 200            | 404          | Update the driver profile details |
+| POST        | `/api/driver/`    | { name, img, location } | 200            | 404          | Create Driver account             |
 
 <br>
 
