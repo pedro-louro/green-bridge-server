@@ -138,24 +138,26 @@ MVP: Customer, stores, GPS (filter by near By)
 **Store model**
 
 ```javascript
- {
-   name: { type: String, required: true },
-   img: { type: String },
-   admin: { type: Schema.Types.ObjectId, ref:'User' },
-   products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
-   orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
- }
+{
+  name: { type: String, required: true },
+  img: { type: String },
+  admin: { type: Schema.Types.ObjectId, ref:'User' },
+  products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+  orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
+}
 ```
 
 **Product Model**
 
 ```javascript
- {
-   name: { type: String, required: true },
-   img: { type: String },
-   store: { type: Schema.Types.ObjectId, ref:'Store', required: true },
-   price: {type : Number, required: true}
- }
+{
+  name: { type: String, required: true },
+  img: { type: String },
+  store: { type: Schema.Types.ObjectId, ref:'Store', required: true },
+  price: {type : Number, required: true},
+  stock: { type: Number }
+
+}
 ```
 
 **Order model**
@@ -165,7 +167,8 @@ MVP: Customer, stores, GPS (filter by near By)
   store: { type: Schema.Types.ObjectId, ref: 'Task', required: true },
   user: { type: Schema.Types.ObjectId, ref: 'User', required : true },
   products: [{ type: Schema.Types.ObjectId, ref: 'Product', required :true },]
-  status: {type: String, enum: ['new', 'preparing', 'ready', 'delivering', 'delivered', 'canceled'], required :true}
+  status: {type: String, enum: ['new', 'preparing', 'ready', 'delivering', 'delivered', 'canceled'], required :true},
+  total: {type: Number}
 }
 ```
 
