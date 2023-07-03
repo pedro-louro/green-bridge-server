@@ -7,4 +7,4 @@ const storeSchema = new Schema({
   products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
   orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
 });
-module.exports = model('Project', storeSchema);
+module.exports = model('Store', storeSchema);

@@ -182,7 +182,7 @@ MVP: Customer, stores, GPS (filter by near By)
 | ----------- | -------------- | ----------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
 | POST        | `/auth/signup` | {name, email, password} | 200            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
 | POST        | `/auth/login`  | {username, password}    | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
-| GET         | `/api/verify`  |                         |                |              | Verifies the JWT                                                                                                                |
+| GET         | `/auth/verify` |                         |                |              | Verifies the JWT                                                                                                                |
 
 ### Client
 
@@ -193,13 +193,22 @@ MVP: Customer, stores, GPS (filter by near By)
 
 ### Stores
 
-| HTTP Method | URL               | Request Body                            | Success status | Error Status | Description                 |
-| ----------- | ----------------- | --------------------------------------- | -------------- | ------------ | --------------------------- |
-| GET         | `/api/stores`     |                                         |                | 400          | Show all available stores   |
-| GET         | `/api/stores/:id` |                                         |                |              | Show specific store         |
-| POST        | `/api/stores`     | { name, img, address, products, admin } |                | 400          | Create and save a new store |
-| PUT         | `/api/stores/:id` | { name, img,address, products, admin }  | 200            | 400          | edit the store              |
-| DELETE      | `/api/stores/:id` |                                         | 201            | 400          | delete store                |
+| HTTP Method | URL               | Request Body                           | Success status | Error Status | Description                 |
+| ----------- | ----------------- | -------------------------------------- | -------------- | ------------ | --------------------------- |
+| GET         | `/api/stores`     |                                        |                | 400          | Show all available stores   |
+| GET         | `/api/stores/:id` |                                        |                |              | Show specific store         |
+| POST        | `/api/stores`     | { name, img, address, admin }          |                | 400          | Create and save a new store |
+| PUT         | `/api/stores/:id` | { name, img,address, products, admin } | 200            | 400          | edit the store              |
+| DELETE      | `/api/stores/:id` |                                        | 201            | 400          | delete store                |
+
+### Products
+
+| HTTP Method | URL                        | Request Body                       | Success status | Error Status | Description               |
+| ----------- | -------------------------- | ---------------------------------- | -------------- | ------------ | ------------------------- |
+| GET         | `/api/products/:productId` |                                    |                |              | List details of a product |
+| POST        | `/api/products/`           | {name, img, store, price quantity} |                |              | Create a Product          |
+| PUT         | `/api/products/:productId` | {name, img, store, price quantity} |                |              | update a Product          |
+| Delete      | `/api/products/:productId` |                                    |                |              | Delete a Product          |
 
 ### Orders
 

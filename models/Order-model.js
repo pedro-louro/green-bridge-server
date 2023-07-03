@@ -11,4 +11,4 @@ const orderSchema = new Schema({
   },
   total: { type: Number }
 });
-module.exports = model('Project', orderSchema);
+module.exports = model('Order', orderSchema);
