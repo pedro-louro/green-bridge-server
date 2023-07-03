@@ -15,6 +15,7 @@ router.get('/stores', async (req, res, next) => {
   }
 });
 
+// Get store by ID
 router.get('/stores/:storeId', async (req, res, next) => {
   const { storeId } = req.params;
 
