@@ -216,7 +216,7 @@ MVP: Customer, stores, GPS (filter by near By)
 | ----------- | ----------------- | -------------------------------------- | -------------- | ------------ | ------------------------ |
 | GET         | `/api/orders/:id` |                                        |                |              | List details of an order |
 | POST        | `/api/orders`     | {products, user, store, status, total} |                |              | Place an order           |
-| PUT         | `/api/orders/:id` | {products, user, store, status, total} |                |              | Update an order          |
+| PUT         | `/api/orders/:id` | {status}                               |                |              | Update an order status   |
 
 ### Driver
 
