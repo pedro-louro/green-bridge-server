@@ -186,10 +186,10 @@ MVP: Customer, stores, GPS (filter by near By)
 
 ### Client
 
-| HTTP Method | URL                 | Request Body            | Success status | Error Status | Description                         |
-| ----------- | ------------------- | ----------------------- | -------------- | ------------ | ----------------------------------- |
-| GET         | `/api/customer/:id` |                         |                |              | show the customer profile details   |
-| PUT         | `/api/customer/:id` | { name, img, location } | 200            | 404          | Update the customer profile details |
+| HTTP Method | URL             | Request Body                             | Success status | Error Status | Description                         |
+| ----------- | --------------- | ---------------------------------------- | -------------- | ------------ | ----------------------------------- |
+| GET         | `/api/user/:id` |                                          |                |              | show the customer profile details   |
+| PUT         | `/api/user/:id` | { name, img, location, store, isDriver } | 200            | 404          | Update the customer profile details |
 
 ### Stores
 

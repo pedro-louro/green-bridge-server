@@ -18,7 +18,10 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Name is required.']
     },
-    isDriver: { type: Boolean }
+    isDriver: { type: Boolean },
+    img: { type: String },
+    address: { type: String },
+    store: { type: Schema.Types.ObjectId, ref: 'Store' }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

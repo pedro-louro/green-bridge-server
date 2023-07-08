@@ -13,6 +13,8 @@ const User = require('../models/User.model');
 // Require necessary (isAuthenticated) middleware in order to control access to specific routes
 const { isAuthenticated } = require('../middleware/jwt.middleware.js');
 
+const mongoose = require('mongoose');
+
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
 
@@ -98,10 +100,10 @@ router.post('/login', (req, res, next) => {
 
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
-        const { _id, email, name } = foundUser;
+        const { _id, email, name, store } = foundUser;
 
         // Create an object that will be set as the token payload
-        const payload = { _id, email, name };
+        const payload = { _id, email, name, store };
 
         // Create a JSON Web Token and sign it
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
@@ -128,4 +130,27 @@ router.get('/verify', isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);
 });
 
+// update user details
+router.put('/user/:userId', async (req, res, next) => {
+  const { name, address, email, isDriver, img, store } = req.body;
+  const { userId } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: 'Please use a valid ID' });
+    }
+
+    const updateUser = await User.findByIdAndUpdate(
+      userId,
+      { name, address, email, img, isDriver, store },
+      { new: true }
+    );
+
+    console.log(updateUser);
+    res.json(updateUser);
+  } catch (error) {
+    console.log('An error occurred updating the User details', error);
+    next(error);
+  }
+});
 module.exports = router;
