@@ -25,10 +25,7 @@ router.get('/stores/:storeId', async (req, res, next) => {
       return res.status(400).json({ message: 'Please use a valid ID' });
     }
 
-    const getStore = await Store.findById(storeId).populate(
-      'admin',
-      'products'
-    );
+    const getStore = await Store.findById(storeId).populate('products');
 
     if (!getStore) {
       return res.status(404).json({ message: 'No Store found with that ID' });
@@ -60,7 +57,7 @@ router.post('/stores', async (req, res, next) => {
 
 // Route to Update the Store
 router.put('/stores/:storeId', async (req, res, next) => {
-  const { name, img, address } = req.body;
+  const { name, img, address, products } = req.body;
   const { storeId } = req.params;
 
   try {
@@ -76,6 +73,11 @@ router.put('/stores/:storeId', async (req, res, next) => {
       },
       { new: true }
     ).populate('admin', 'products');
+    if (products) {
+      await Store.findByIdAndUpdate(storeId, {
+        $push: { products: products }
+      }).populate('products');
+    }
     res.json(updateStore);
   } catch (error) {
     console.log('An error occurred updating the store', error);
