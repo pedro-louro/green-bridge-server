@@ -153,4 +153,29 @@ router.put('/user/:userId', async (req, res, next) => {
     next(error);
   }
 });
+
+// Get User
+router.get('/user/:userId', async (req, res, next) => {
+  const { name, address, email, isDriver, img, store } = req.body;
+  const { userId } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: 'Please use a valid ID' });
+    }
+
+    const getUser = await User.findById(userId);
+
+    res.json({
+      email: getUser.email,
+      name: getUser.name,
+      store: getUser.store,
+      isDriver: getUser.isDriver
+    });
+  } catch (error) {
+    console.log('An error occurred updating the User details', error);
+    next(error);
+  }
+});
+
 module.exports = router;
