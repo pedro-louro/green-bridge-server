@@ -6,7 +6,15 @@ const orderSchema = new Schema({
   products: [{ type: Schema.Types.ObjectId, ref: 'Product', required: true }],
   status: {
     type: String,
-    enum: ['new', 'preparing', 'ready', 'delivering', 'delivered', 'canceled'],
+    enum: [
+      'cart',
+      'new',
+      'preparing',
+      'ready',
+      'delivering',
+      'delivered',
+      'canceled'
+    ],
     required: true
   },
   total: { type: Number }

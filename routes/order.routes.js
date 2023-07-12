@@ -6,9 +6,6 @@ const mongoose = require('mongoose');
 router.post('/orders', async (req, res, next) => {
   const { store, user, products, status, total } = req.body;
 
-  console.log('PRODUCTS HEREEEEEEEEEEEEEEEEE');
-  console.log(products);
-
   try {
     const newOrder = await Order.create({
       store,
@@ -49,7 +46,7 @@ router.get('/orders/:orderId', async (req, res, next) => {
 });
 
 router.put('/orders/:orderId', async (req, res, next) => {
-  const { status } = req.body;
+  const { status, products } = req.body;
   const { orderId } = req.params;
 
   try {
@@ -57,6 +54,7 @@ router.put('/orders/:orderId', async (req, res, next) => {
       return res.status(400).json({ message: 'Please use a valid ID' });
     }
     if (
+      status !== 'cart' &&
       status !== 'new' &&
       status !== 'preparing' &&
       status !== 'ready' &&
@@ -67,15 +65,20 @@ router.put('/orders/:orderId', async (req, res, next) => {
       return res
         .status(400)
         .json({ message: 'Please use a valid Order Status' });
-    } else {
-      const updateOrder = await Order.findByIdAndUpdate(
-        orderId,
-        { status },
-        { new: true }
-      ).populate('products');
-
-      res.json(updateOrder);
     }
+    let updateOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    ).populate('products');
+
+    if (products) {
+      updateOrder = await Order.findByIdAndUpdate(orderId, {
+        $push: { products: products }
+      }).populate('products');
+    }
+
+    res.json(updateOrder);
   } catch (error) {
     console.log('An error occurred updating the Order', error);
     next(error);
