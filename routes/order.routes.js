@@ -33,7 +33,7 @@ router.get('/orders/:orderId', async (req, res, next) => {
       return res.status(400).json({ message: 'Please use a valid ID' });
     }
 
-    const getOrder = await Order.findById(orderId).populate('products');
+    const getOrder = await Order.findById(orderId).populate('products.product');
 
     if (!getOrder) {
       return res.status(404).json({ message: 'No Order found with that ID' });
@@ -72,10 +72,48 @@ router.put('/orders/:orderId', async (req, res, next) => {
       { new: true }
     ).populate('products');
 
+    // Built to receive one single product for now
     if (products) {
-      updateOrder = await Order.findByIdAndUpdate(orderId, {
-        $push: { products: products }
-      }).populate('products');
+      console.log(`Products`);
+
+      console.log(products);
+      // Check if product to be added/updated exists in the existing order
+      const productExists = updateOrder.products.filter(
+        existingProduct =>
+          existingProduct.product.toString() === products.product
+      );
+      console.log('Product Exists');
+      console.log(productExists);
+
+      if (productExists.length) {
+        //If the product exists, find it's index
+        const productIndex = updateOrder.products.findIndex(
+          element => element.product.toString() === products.product._id
+        );
+        console.log('Index');
+        console.log(products);
+
+        // Remove the existing product from the initial array of products
+        let newProductsArray = [
+          ...updateOrder.products.splice(productIndex, 1)
+        ];
+        console.log('Splice Array');
+        console.log(newProductsArray);
+
+        // TO add it again, but updated with the new data received (new quantity)
+        updateOrder.products.push(products);
+        console.log('New Array');
+        console.log(updateOrder.products);
+
+        // TO fix: Change the names of the variables
+        updateOrder = await Order.findByIdAndUpdate(orderId, {
+          products: updateOrder.products
+        }).populate('products');
+      } else {
+        updateOrder = await Order.findByIdAndUpdate(orderId, {
+          $push: { products: products }
+        }).populate('products');
+      }
     }
 
     res.json(updateOrder);
