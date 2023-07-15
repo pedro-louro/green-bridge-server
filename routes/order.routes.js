@@ -47,11 +47,12 @@ router.get('/orders/:orderId', async (req, res, next) => {
 
 // Get list of orders for given User
 
-router.get('/orders', async (req, res, next) => {
-  const { userId } = req.body;
-
+router.get('/orders/user/:userId', async (req, res, next) => {
+  const { userId } = req.params;
   try {
-    const getOrders = await Order.find({ user: userId }).populate('products');
+    const getOrders = await Order.find({ user: userId })
+      .populate('products.product')
+      .populate('store');
 
     if (!getOrders) {
       return res.status(404).json({ message: 'No Orders found for that user' });
@@ -64,7 +65,7 @@ router.get('/orders', async (req, res, next) => {
 });
 
 router.put('/orders/:orderId', async (req, res, next) => {
-  const { status, products } = req.body;
+  const { status, products, total } = req.body;
   const { orderId } = req.params;
 
   try {
@@ -86,7 +87,7 @@ router.put('/orders/:orderId', async (req, res, next) => {
     }
     let updateOrder = await Order.findByIdAndUpdate(
       orderId,
-      { status },
+      { status, total },
       { new: true }
     ).populate('products');
 

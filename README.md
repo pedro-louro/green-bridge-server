@@ -212,12 +212,13 @@ MVP: Customer, stores, GPS (filter by near By)
 
 ### Orders
 
-| HTTP Method | URL               | Request Body                           | Success status | Error Status | Description              |
-| ----------- | ----------------- | -------------------------------------- | -------------- | ------------ | ------------------------ |
-| GET         | `/api/orders/:id` |                                        |                |              | List details of an order |
-| POST        | `/api/orders`     | {products, user, store, status, total} |                |              | Place an order           |
-| PUT         | `/api/orders/:id` | {status}                               |                |              | Update an order status   |
-| DELETE      | `/api/orders/:id` |                                        |                |              | Delete an order          |
+| HTTP Method | URL                        | Request Body                           | Success status | Error Status | Description                   |
+| ----------- | -------------------------- | -------------------------------------- | -------------- | ------------ | ----------------------------- |
+| GET         | `/api/orders/:id`          |                                        |                |              | List details of an order      |
+| GET         | `/api/orders/user/:userId` |                                        |                |              | Get all orders for given user |
+| POST        | `/api/orders`              | {products, user, store, status, total} |                |              | Place an order                |
+| PUT         | `/api/orders/:id`          | {status}                               |                |              | Update an order status        |
+| DELETE      | `/api/orders/:id`          |                                        |                |              | Delete an order               |
 
 ### Driver
 
