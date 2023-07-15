@@ -25,7 +25,7 @@ router.get('/stores/:storeId', async (req, res, next) => {
       return res.status(400).json({ message: 'Please use a valid ID' });
     }
 
-    const getStore = await Store.findById(storeId).populate('products');
+    const getStore = await Store.findById(storeId).populate('orders products');
 
     if (!getStore) {
       return res.status(404).json({ message: 'No Store found with that ID' });
@@ -57,14 +57,14 @@ router.post('/stores', async (req, res, next) => {
 
 // Route to Update the Store
 router.put('/stores/:storeId', async (req, res, next) => {
-  const { name, img, address, products } = req.body;
+  const { name, img, address, products, orders } = req.body;
   const { storeId } = req.params;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(storeId)) {
       return res.status(400).json({ message: 'Please use a valid ID' });
     }
-    const updateStore = await Store.findByIdAndUpdate(
+    let updateStore = await Store.findByIdAndUpdate(
       storeId,
       {
         name,
@@ -72,12 +72,24 @@ router.put('/stores/:storeId', async (req, res, next) => {
         address
       },
       { new: true }
-    ).populate('admin', 'products');
+    )
+      .populate('products')
+      .populate('orders');
     if (products) {
-      await Store.findByIdAndUpdate(storeId, {
+      updateStore = await Store.findByIdAndUpdate(storeId, {
         $push: { products: products }
-      }).populate('products');
+      })
+        .populate('products')
+        .populate('orders');
     }
+    if (orders) {
+      updateStore = await Store.findByIdAndUpdate(storeId, {
+        $push: { orders: orders }
+      })
+        .populate('products')
+        .populate('orders');
+    }
+
     res.json(updateStore);
   } catch (error) {
     console.log('An error occurred updating the store', error);
