@@ -105,7 +105,9 @@ router.put('/orders/:orderId', async (req, res, next) => {
         console.log('New Array');
         console.log(updateOrder.products);
 
-        // TO fix: Change the names of the variables
+        // TO fix:
+        // 1. If products are added too fast, same product is added twice despite existing in the array already
+        // 2.Change the names of the variables
         updateOrder = await Order.findByIdAndUpdate(orderId, {
           products: updateOrder.products
         }).populate('products');
@@ -119,6 +121,25 @@ router.put('/orders/:orderId', async (req, res, next) => {
     res.json(updateOrder);
   } catch (error) {
     console.log('An error occurred updating the Order', error);
+    next(error);
+  }
+});
+
+router.delete('/orders/:orderId', async (req, res, next) => {
+  const { orderId } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(orderId)) {
+      return res.status(400).json({ message: 'Please use a valid ID' });
+    }
+    const deleteOrder = await Order.findByIdAndDelete(orderId, {
+      new: true
+    });
+    res.json({
+      message: `Order with ID ${orderId} was deleted successfully`
+    });
+  } catch (error) {
+    console.log('An error occurred deleting the order', error);
     next(error);
   }
 });
