@@ -64,6 +64,25 @@ router.get('/orders/user/:userId', async (req, res, next) => {
   }
 });
 
+// Get list of orders for given Order Status
+
+router.get('/orders/', async (req, res, next) => {
+  const { status } = req.query;
+  try {
+    const getOrders = await Order.find({ status: status }).populate('store');
+
+    if (!getOrders) {
+      return res
+        .status(404)
+        .json({ message: 'No Orders found for that status' });
+    }
+    res.json(getOrders);
+  } catch (error) {
+    console.log('There was an error retrieving the Order', error);
+    next(error);
+  }
+});
+
 router.put('/orders/:orderId', async (req, res, next) => {
   const { status, products, total } = req.body;
   const { orderId } = req.params;
