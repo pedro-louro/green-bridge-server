@@ -33,7 +33,9 @@ router.get('/orders/:orderId', async (req, res, next) => {
       return res.status(400).json({ message: 'Please use a valid ID' });
     }
 
-    const getOrder = await Order.findById(orderId).populate('products.product');
+    const getOrder = await Order.findById(orderId).populate(
+      'products.product user store'
+    );
 
     if (!getOrder) {
       return res.status(404).json({ message: 'No Order found with that ID' });
@@ -84,7 +86,7 @@ router.get('/orders/', async (req, res, next) => {
 });
 
 router.put('/orders/:orderId', async (req, res, next) => {
-  const { status, products, total } = req.body;
+  const { status, products, total, driver } = req.body;
   const { orderId } = req.params;
 
   try {
@@ -106,7 +108,7 @@ router.put('/orders/:orderId', async (req, res, next) => {
     }
     let updateOrder = await Order.findByIdAndUpdate(
       orderId,
-      { status, total },
+      { status, total, driver },
       { new: true }
     ).populate('products');
 

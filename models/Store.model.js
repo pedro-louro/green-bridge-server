@@ -5,6 +5,7 @@ const storeSchema = new Schema({
   img: { type: String },
   admin: { type: Schema.Types.ObjectId, ref: 'User' },
   products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
-  orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
+  orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
+  address: { type: String }
 });
 module.exports = model('Store', storeSchema);
