@@ -137,7 +137,7 @@ router.put('/orders/:orderId', async (req, res, next) => {
     if (products) {
       console.log(`Products`);
 
-      console.log(products);
+      console.log(products.quantity);
       // Check if product to be added/updated exists in the existing order
       const productExists = updateOrder.products.filter(
         existingProduct =>
@@ -149,26 +149,16 @@ router.put('/orders/:orderId', async (req, res, next) => {
       if (productExists.length) {
         //If the product exists, find it's index
         const productIndex = updateOrder.products.findIndex(
-          element => element.product.toString() === products.product._id
+          element => element.product.toString() === products.product
         );
-        console.log('Index');
-        console.log(products);
 
-        // Remove the existing product from the initial array of products
-        let newProductsArray = [
-          ...updateOrder.products.splice(productIndex, 1)
-        ];
-        console.log('Splice Array');
-        console.log(newProductsArray);
-
-        // TO add it again, but updated with the new data received (new quantity)
-        updateOrder.products.push(products);
-        console.log('New Array');
-        console.log(updateOrder.products);
+        // update the array of products by it's index (find witht the product ID) to set the new quantity
+        updateOrder.products[productIndex].quantity = products.quantity;
 
         // TO fix:
-        // 1. If products are added too fast, same product is added twice despite existing in the array already
         // 2.Change the names of the variables
+
+        // send the new array of products to the DB
         updateOrder = await Order.findByIdAndUpdate(orderId, {
           products: updateOrder.products
         }).populate('products');
