@@ -66,6 +66,27 @@ router.get('/orders/user/:userId', async (req, res, next) => {
   }
 });
 
+// Get list of orders for given Driver
+
+router.get('/orders/', async (req, res, next) => {
+  const { driver } = req.query;
+  try {
+    const getOrders = await Order.find({ driver: driver }).populate(
+      'store products.product user'
+    );
+
+    if (!getOrders) {
+      return res
+        .status(404)
+        .json({ message: 'No Orders found for that status' });
+    }
+    res.json(getOrders);
+  } catch (error) {
+    console.log('There was an error retrieving the Order', error);
+    next(error);
+  }
+});
+
 // Get list of orders for given Order Status
 
 router.get('/orders/', async (req, res, next) => {
