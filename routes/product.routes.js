@@ -86,4 +86,16 @@ router.delete('/products/:productId', async (req, res, next) => {
   }
 });
 
+// Route to upload image to Cloudinary and return the image URL
+router.post('/upload', fileUploader.single('file'), (req, res, next) => {
+  console.log('BODY');
+  console.log(req.body);
+  try {
+    res.json({ img: req.file.path });
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred uploading the image' });
+    next(error);
+  }
+});
+
 module.exports = router;

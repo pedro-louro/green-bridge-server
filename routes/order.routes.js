@@ -52,9 +52,9 @@ router.get('/orders/:orderId', async (req, res, next) => {
 router.get('/orders/user/:userId', async (req, res, next) => {
   const { userId } = req.params;
   try {
-    const getOrders = await Order.find({ user: userId })
-      .populate('products.product')
-      .populate('store');
+    const getOrders = await Order.find({ user: userId }).populate(
+      'products store'
+    );
 
     if (!getOrders) {
       return res.status(404).json({ message: 'No Orders found for that user' });

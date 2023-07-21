@@ -10,7 +10,7 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: { allowed_formats: ['png', 'jpeg'], folder: 'project-management' }
+  params: { allowed_formats: ['png', 'jpeg'], folder: 'green-bridge' }
 });
 
 module.exports = multer({ storage });
