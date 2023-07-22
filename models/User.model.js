@@ -20,7 +20,7 @@ const userSchema = new Schema(
     },
     isDriver: { type: Boolean },
     img: { type: String },
-    address: { type: String },
+    address: { type: Object },
     store: { type: Schema.Types.ObjectId, ref: 'Store' }
   },
   {
