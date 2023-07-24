@@ -152,11 +152,13 @@ router.put('/orders/:orderId', async (req, res, next) => {
           element => element.product.toString() === products.product
         );
 
-        // update the array of products by it's index (find witht the product ID) to set the new quantity
-        updateOrder.products[productIndex].quantity = products.quantity;
-
-        // TO fix:
-        // 2.Change the names of the variables
+        //IF the quantity is 0, remove the product from the array
+        if (products.quantity === 0) {
+          updateOrder.products.splice(productIndex, 1);
+        } else {
+          // update the array of products by it's index (find witht the product ID) to set the new quantity
+          updateOrder.products[productIndex].quantity = products.quantity;
+        }
 
         // send the new array of products to the DB
         updateOrder = await Order.findByIdAndUpdate(orderId, {
