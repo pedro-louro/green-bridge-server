@@ -37,7 +37,7 @@ router.get('/stores/:storeId', async (req, res, next) => {
   }
 });
 
-// Route to create the store
+// Route to create a new store
 router.post('/stores', async (req, res, next) => {
   const { name, admin, img, address } = req.body;
 
