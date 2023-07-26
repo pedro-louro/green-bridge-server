@@ -25,7 +25,9 @@ router.get('/stores/:storeId', async (req, res, next) => {
       return res.status(400).json({ message: 'Please use a valid ID' });
     }
 
-    const getStore = await Store.findById(storeId).populate('orders products');
+    const getStore = await Store.findById(storeId).populate(
+      'products orders orders.products orders.user'
+    );
 
     if (!getStore) {
       return res.status(404).json({ message: 'No Store found with that ID' });

@@ -34,7 +34,7 @@ router.get('/orders/:orderId', async (req, res, next) => {
     }
 
     const getOrder = await Order.findById(orderId).populate(
-      'products.product user store'
+      'products store user products.product'
     );
 
     if (!getOrder) {
@@ -53,7 +53,7 @@ router.get('/orders/user/:userId', async (req, res, next) => {
   const { userId } = req.params;
   try {
     const getOrders = await Order.find({ user: userId }).populate(
-      'products store'
+      'products store products.product'
     );
 
     if (!getOrders) {
@@ -68,11 +68,33 @@ router.get('/orders/user/:userId', async (req, res, next) => {
 
 // Get list of orders for given Driver
 
-router.get('/orders/', async (req, res, next) => {
-  const { driver } = req.query;
+// router.get('/orders', async (req, res, next) => {
+//   const { driver } = req.query;
+//   try {
+//     const getOrders = await Order.find({ driver: driver }).populate(
+//       'store products.product user'
+//     );
+
+//     if (!getOrders) {
+//       return res
+//         .status(404)
+//         .json({ message: 'No Orders found for that status' });
+//     }
+//     res.json(getOrders);
+//   } catch (error) {
+//     console.log('There was an error retrieving the Order', error);
+//     next(error);
+//   }
+// });
+
+// Get list of orders for given Order Status
+
+router.get('/orders', async (req, res, next) => {
+  const { status } = req.query;
+  console.log(status);
   try {
-    const getOrders = await Order.find({ driver: driver }).populate(
-      'store products.product user'
+    const getOrders = await Order.find({ status: status }).populate(
+      'store user products products.product'
     );
 
     if (!getOrders) {
@@ -86,26 +108,7 @@ router.get('/orders/', async (req, res, next) => {
     next(error);
   }
 });
-
-// Get list of orders for given Order Status
-
-router.get('/orders/', async (req, res, next) => {
-  const { status } = req.query;
-  try {
-    const getOrders = await Order.find({ status: status }).populate('store');
-
-    if (!getOrders) {
-      return res
-        .status(404)
-        .json({ message: 'No Orders found for that status' });
-    }
-    res.json(getOrders);
-  } catch (error) {
-    console.log('There was an error retrieving the Order', error);
-    next(error);
-  }
-});
-
+// Update orders
 router.put('/orders/:orderId', async (req, res, next) => {
   const { status, products, total, driver } = req.body;
   const { orderId } = req.params;
