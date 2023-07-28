@@ -23,6 +23,7 @@ const orderSchema = new Schema({
     ],
     required: true
   },
-  total: { type: Number }
+  total: { type: Number },
+  shipping: { type: Number }
 });
 module.exports = model('Order', orderSchema);

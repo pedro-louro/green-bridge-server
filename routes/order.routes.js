@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // Create Order
 router.post('/orders', async (req, res, next) => {
-  const { store, user, products, status, total } = req.body;
+  const { store, user, products, status, total, shipping } = req.body;
 
   try {
     const newOrder = await Order.create({
@@ -12,7 +12,8 @@ router.post('/orders', async (req, res, next) => {
       user,
       products,
       status,
-      total
+      total,
+      shipping
     });
 
     res.json(newOrder);
@@ -134,20 +135,16 @@ router.put('/orders/:orderId', async (req, res, next) => {
       orderId,
       { status, total, driver },
       { new: true }
-    ).populate('products');
+    ).populate('products user');
 
     // Built to receive one single product for now
     if (products) {
-      console.log(`Products`);
-
       console.log(products.quantity);
       // Check if product to be added/updated exists in the existing order
       const productExists = updateOrder.products.filter(
         existingProduct =>
           existingProduct.product.toString() === products.product
       );
-      console.log('Product Exists');
-      console.log(productExists);
 
       if (productExists.length) {
         //If the product exists, find it's index
@@ -166,11 +163,11 @@ router.put('/orders/:orderId', async (req, res, next) => {
         // send the new array of products to the DB
         updateOrder = await Order.findByIdAndUpdate(orderId, {
           products: updateOrder.products
-        }).populate('products');
+        }).populate('products user');
       } else {
         updateOrder = await Order.findByIdAndUpdate(orderId, {
           $push: { products: products }
-        }).populate('products');
+        }).populate('products user');
       }
     }
 
