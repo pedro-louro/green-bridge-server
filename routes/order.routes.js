@@ -72,7 +72,7 @@ router.get('/orders/driver/:driverId', async (req, res, next) => {
   const { driverId } = req.params;
   try {
     const getOrders = await Order.find({ driver: driverId }).populate(
-      'store user'
+      'store user products.product'
     );
 
     if (!getOrders) {
