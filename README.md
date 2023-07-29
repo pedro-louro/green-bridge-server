@@ -1,4 +1,4 @@
-# Project Name
+# Green Bridge
 
 <br>
 
@@ -6,20 +6,15 @@
 
 This is an app to democratize plants and flowers delivery, by connecting customers and shops with independent drivers.
 
-MVP: Customer, stores, GPS (filter by near By)
-
-- Add driver only if there's time
-
-<!-- -  **404:** As a user I get to see a 404 page with a feedback message if I try to reach a page that does not exist so that I know it's my fault.
--  **Signup:** As an anonymous user I can sign up on the platform so that I can start creating and managing tournaments.
--  **Login:** As a user I can login to the platform so that I can access my profile and start creating and managing tournaments.
+-  **Signup:** As an anonymous user you can sign up on the app so that you can shop, sell or deliver plants.
+-  **Login:** As a user you can login to the app so that you can shop, sell or deliver plants.
 -  **Logout:** As a logged in user I can logout from the platform so no one else can use it.
 -  **Profile Page**: As a logged in user I can visit my profile page so that I can access the edit page and see the list of tournaments I have created.
 -  **Add Tournaments:** As a logged in user I can access the add tournament page so that I can create a new tournament.
 -  **Edit Tournaments:** As a logged in user I can access the edit tournament page so that I can edit the tournament I created.
 -  **Add Players:** As a user I can add players to a tournament.
 -  **View Tournament Table:** As a user I want to see the tournament details, players list and the time table.
--  **View Ranks:** As a user I can see the rankings list for the tournament. -->
+-  **View Ranks:** As a user I can see the rankings list for the tournament.
 
 # Client / Frontend
 
@@ -30,8 +25,7 @@ MVP: Customer, stores, GPS (filter by near By)
 | `/login`                    | Login              | anon only `<AnonRoute>`     | Login form, navigates to home page after login.   |
 | `/signup`                   | Signup             | anon only `<AnonRoute>`     | Signup form, navigates to home page after signup. |
 | `/`                         | HomePage           | public `<Route>`            | Home page.                                        |
-| `/user-profile`             | ProfilePage        | user only `<PrivateRoute>`  | User and player profile for the current user.     |
-| `/user-profile/edit`        | EditProfile        | user only `<PrivateRoute>`  | Edit user profile form.                           |
+| `/userdetails`             | ProfilePage        | user only `<PrivateRoute>`  | See and edit the User profile for the current user.     |
 | `/stores/add`               | AddStore           | admin only `<PrivateRoute>` | Create new store form.                            |
 | `/stores`                   | ListStores         | user only `<PrivateRoute>`  | Stores list.                                      |
 | `/stores/:storeId`          | StoreDetail        | user only `<PrivateRoute>`  | Store details. Shows products list .              |
