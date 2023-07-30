@@ -1,112 +1,109 @@
-# Project Name
+# Green Bridge
 
+[Green Bridge App ](https://green-bridge.netlify.app/)
+
+Built using [MERN stack](https://www.mongodb.com/languages/mern-stack-tutorial)
 <br>
 
 ## Description
 
 This is an app to democratize plants and flowers delivery, by connecting customers and shops with independent drivers.
 
-MVP: Customer, stores, GPS (filter by near By)
-
-- Add driver only if there's time
-
-<!-- -  **404:** As a user I get to see a 404 page with a feedback message if I try to reach a page that does not exist so that I know it's my fault.
--  **Signup:** As an anonymous user I can sign up on the platform so that I can start creating and managing tournaments.
--  **Login:** As a user I can login to the platform so that I can access my profile and start creating and managing tournaments.
--  **Logout:** As a logged in user I can logout from the platform so no one else can use it.
--  **Profile Page**: As a logged in user I can visit my profile page so that I can access the edit page and see the list of tournaments I have created.
--  **Add Tournaments:** As a logged in user I can access the add tournament page so that I can create a new tournament.
--  **Edit Tournaments:** As a logged in user I can access the edit tournament page so that I can edit the tournament I created.
--  **Add Players:** As a user I can add players to a tournament.
--  **View Tournament Table:** As a user I want to see the tournament details, players list and the time table.
--  **View Ranks:** As a user I can see the rankings list for the tournament. -->
-
 # Client / Frontend
 
 ## React Router Routes (React App)
 
-| Path                        | Page/Component     | Permissions                 | Behavior                                          |
-| --------------------------- | ------------------ | --------------------------- | ------------------------------------------------- |
-| `/login`                    | Login              | anon only `<AnonRoute>`     | Login form, navigates to home page after login.   |
-| `/signup`                   | Signup             | anon only `<AnonRoute>`     | Signup form, navigates to home page after signup. |
-| `/`                         | HomePage           | public `<Route>`            | Home page.                                        |
-| `/user-profile`             | ProfilePage        | user only `<PrivateRoute>`  | User and player profile for the current user.     |
-| `/user-profile/edit`        | EditProfile        | user only `<PrivateRoute>`  | Edit user profile form.                           |
-| `/stores/add`               | AddStore           | admin only `<PrivateRoute>` | Create new store form.                            |
-| `/stores`                   | ListStores         | user only `<PrivateRoute>`  | Stores list.                                      |
-| `/stores/:storeId`          | StoreDetail        | user only `<PrivateRoute>`  | Store details. Shows products list .              |
-| `/stores/:storeId/edit`     | EditStoreDetail    | admin only `<PrivateRoute>` | Update store details, add products                |
-| `/stores/:storeId/checkout` | StoreCheckout      | user only `<PrivateRoute>`  | Show list of products added to cart               |
-| `/stores/:productId`        | ProductDetails     | user only `<PrivateRoute>`  | Shows details of the product                      |
-| `/stores/:productId/edit`   | EditProductDetails | admin only `<PrivateRoute>` | Shows details of the product                      |
-| `/orders/:storeId`          | ListStoreOrders    | user only `<PrivateRoute>`  | Returns all orders received by the store          |
-| `/orders/:userId`           | ListUserOrders     | user only `<PrivateRoute>`  | Returns all orders placed by the user.            |
+| Path                       | Page/Component             | Permissions                | Behavior                                                |
+| -------------------------- | -------------------------- | -------------------------- | ------------------------------------------------------- |
+| `/login`                   | Login                      | anon only `<AnonRoute>`    | Login form, navigates to home page after login.         |
+| `/signup`                  | Signup                     | anon only `<AnonRoute>`    | Signup form, navigates to home page after signup.       |
+| `/`                        | HomePage                   | public `<Route>`           | Home page.                                              |
+| `/userdetails`             | ProfilePage                | user only `<PrivateRoute>` | User and player profile for the current user.           |
+| `/stores`                  | ListStores                 | user only `<PrivateRoute>` | Stores list.                                            |
+| `/stores/:storeId`         | StoreDetail                | user only `<PrivateRoute>` | Store details. Shows products list .                    |
+| `/mycart`                  | StoreCheckout              | user only `<PrivateRoute>` | Show list of products added to cart                     |
+| `/mystore`                 | Store Admin details        | user only `<PrivateRoute>` | Show and update the store details                       |
+| `/mystore/:storeId/orders` | Store orders Admin details | user only `<PrivateRoute>` | Show and update the store orders                        |
+| `/myorders`                | User orders details        | user only `<PrivateRoute>` | Show user orders                                        |
+| `/driver/orders`           | OrdersToDeliver            | user only `<PrivateRoute>` | Show and accept Driver Orders ready to deliver          |
+| `/driver/orders/:orderId`  | OrderDetails               | user only `<PrivateRoute>` | Show and manage the details of the Driver Orders orders |
+| `/driver/myorders`         | DriverOrders               | user only `<PrivateRoute>` | Show Driver Orders orders                               |
 
 ## Pages
 
+- HomePage
+
 ### Auth Pages
 
-- LoginPage
+- Login
 
-- SignupPage
+- Signup
 
 ### Client Pages
 
-- HomePage
-
-- ProfilePage
+- UserDetails
 
 - EditProfilePage
 
-- List Stores
-
-- Store details
-
-- My orders
+- MyOrders
 
 ### Store Pages
 
-- My Store
+- MyStore
 
-- Edit Store
+- AddStore
 
-- Add product/ad to sell
+- CreateProduct
 
-- Edit product/ad
+- StoreDetails
 
-- My Store orders
+- Checkout
+
+- StoreOrders
 
 ### Driver Pages
 
-- LoginPage
+- DriverOrders
 
-- SignupPage
+- DriverOrderCard
 
-- ProfilePage
+- OrderDetails
 
-- EditProfilePage
-
-- List of orders to deliver
-
-- My deliveries
+- OrdersToDeliver
 
 ## Components:
 
-- Navbar
+- UpdateStoreForm
 
-- User profile card
+- UpdateOrderModal
 
-- Product/Ad card
+- StoreOrderCard
 
-- Add Product/Ad card
+- StoreCard
 
-- Order Card
+- ProfileAvatar
 
-- Is Private
+- ProductCard
 
-- Is Anon
+- OrderCard
 
-- Is Admin
+- NavBarUI
+
+- MyStoreProductCard
+
+- IsPrivate
+
+- IsAnon
+
+- FormUpdateUser
+
+- Footer
+
+- FeaturesHomePage
+
+- CartUI
+
+- AddressSearchBar
 
 # Server / Backend
 
@@ -116,23 +113,30 @@ MVP: Customer, stores, GPS (filter by near By)
 
 ```javascript
 {
-  email: {
+    email: {
       type: String,
-      required: [true, "Email is required."],
+      required: [true, 'Email is required.'],
       unique: true,
       lowercase: true,
-      trim: true,
+      trim: true
     },
     password: {
       type: String,
-      required: [true, "Password is required."],
+      required: [true, 'Password is required.']
     },
     name: {
       type: String,
-      required: [true, "Name is required."],
+      required: [true, 'Name is required.']
     },
-    isDriver:{type: Boolean}
-}
+    isDriver: { type: Boolean },
+    img: { type: String },
+    address: { type: Object },
+    store: { type: Schema.Types.ObjectId, ref: 'Store' }
+  },
+  {
+    // this second object adds extra properties: `createdAt` and `updatedAt`
+    timestamps: true
+  }
 ```
 
 **Store model**
@@ -141,9 +145,10 @@ MVP: Customer, stores, GPS (filter by near By)
 {
   name: { type: String, required: true },
   img: { type: String },
-  admin: { type: Schema.Types.ObjectId, ref:'User' },
+  admin: { type: Schema.Types.ObjectId, ref: 'User' },
   products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
-  orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
+  orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
+  address: { type: Object }
 }
 ```
 
@@ -153,10 +158,13 @@ MVP: Customer, stores, GPS (filter by near By)
 {
   name: { type: String, required: true },
   img: { type: String },
-  store: { type: Schema.Types.ObjectId, ref:'Store', required: true },
-  price: {type : Number, required: true},
-  stock: { type: Number }
-
+  store: { type: Schema.Types.ObjectId, ref: 'Store', required: true },
+  price: { type: Number, required: true },
+  stock: { type: Number },
+  status: {
+    type: String,
+    enum: ['enabled', 'disabled', 'deleted']
+  }
 }
 ```
 
@@ -164,11 +172,30 @@ MVP: Customer, stores, GPS (filter by near By)
 
 ```javascript
 {
-  store: { type: Schema.Types.ObjectId, ref: 'Task', required: true },
-  user: { type: Schema.Types.ObjectId, ref: 'User', required : true },
-  products: [{ type: Schema.Types.ObjectId, ref: 'Product', required :true },]
-  status: {type: String, enum: ['new', 'preparing', 'ready', 'delivering', 'delivered', 'canceled'], required :true},
-  total: {type: Number}
+  store: { type: Schema.Types.ObjectId, ref: 'Store', required: true },
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  driver: { type: Schema.Types.ObjectId, ref: 'User' },
+  products: [
+    {
+      product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+      quantity: { type: Number }
+    }
+  ],
+  status: {
+    type: String,
+    enum: [
+      'cart',
+      'new',
+      'preparing',
+      'ready',
+      'delivering',
+      'delivered',
+      'canceled'
+    ],
+    required: true
+  },
+  total: { type: Number },
+  shipping: { type: Number }
 }
 ```
 
@@ -178,85 +205,92 @@ MVP: Customer, stores, GPS (filter by near By)
 
 ### Auth
 
-| HTTP Method | URL            | Request Body            | Success status | Error Status | Description                                                                                                                     |
-| ----------- | -------------- | ----------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| POST        | `/auth/signup` | {name, email, password} | 200            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
-| POST        | `/auth/login`  | {username, password}    | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
-| GET         | `/auth/verify` |                         |                |              | Verifies the JWT                                                                                                                |
-
-### Client
-
-| HTTP Method | URL             | Request Body                             | Success status | Error Status | Description                         |
-| ----------- | --------------- | ---------------------------------------- | -------------- | ------------ | ----------------------------------- |
-| GET         | `/api/user/:id` |                                          |                |              | show the customer profile details   |
-| PUT         | `/api/user/:id` | { name, img, location, store, isDriver } | 200            | 404          | Update the customer profile details |
+| HTTP Method | URL             | Request Body                             | Success status | Error Status | Description                                                                                                         |
+| ----------- | --------------- | ---------------------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------- |
+| POST        | `/auth/signup`  | {name, email, password}                  | 200            | 404          | Checks if fields not empty and user not exists, then create user with encrypted password, and store user in session |
+| POST        | `/auth/login`   | {username, password}                     | 200            |              | Checks if fields not empty if user exists and if password matches then stores user in session                       |
+| GET         | `/auth/verify`  |                                          |                |              | Verifies the JWT                                                                                                    |
+| GET         | `/api/user/:id` |                                          |                |              | show the customer profile details                                                                                   |
+| PUT         | `/api/user/:id` | { name, img, location, store, isDriver } | 200            | 404          | Update the customer profile details                                                                                 |
 
 ### Stores
 
-| HTTP Method | URL               | Request Body                           | Success status | Error Status | Description                 |
-| ----------- | ----------------- | -------------------------------------- | -------------- | ------------ | --------------------------- |
-| GET         | `/api/stores`     |                                        |                | 400          | Show all available stores   |
-| GET         | `/api/stores/:id` |                                        |                |              | Show specific store         |
-| POST        | `/api/stores`     | { name, img, address, admin }          |                | 400          | Create and save a new store |
-| PUT         | `/api/stores/:id` | { name, img,address, products, admin } | 200            | 400          | edit the store              |
-| DELETE      | `/api/stores/:id` |                                        | 201            | 400          | delete store                |
+| HTTP Method | URL                    | Request Body                             | Success status | Error Status | Description                      |
+| ----------- | ---------------------- | ---------------------------------------- | -------------- | ------------ | -------------------------------- |
+| GET         | `/api/stores`          |                                          |                | 400          | Show all available stores        |
+| GET         | `/api/stores/:storeId` |                                          |                |              | Show details of a specific store |
+| POST        | `/api/stores`          | { name, img, address, admin }            |                | 400          | Create and save a new store      |
+| PUT         | `/api/stores/:id`      | { name, img, address, products, orders } | 200            | 400          | edit the store                   |
+| DELETE      | `/api/stores/:id`      |                                          | 201            | 400          | delete store                     |
 
 ### Products
 
-| HTTP Method | URL                        | Request Body                       | Success status | Error Status | Description               |
-| ----------- | -------------------------- | ---------------------------------- | -------------- | ------------ | ------------------------- |
-| GET         | `/api/products/:productId` |                                    |                |              | List details of a product |
-| POST        | `/api/products/`           | {name, img, store, price quantity} |                |              | Create a Product          |
-| PUT         | `/api/products/:productId` | {name, img, store, price quantity} |                |              | update a Product          |
-| Delete      | `/api/products/:productId` |                                    |                |              | Delete a Product          |
+| HTTP Method | URL                        | Request Body                               | Success status | Error Status | Description               |
+| ----------- | -------------------------- | ------------------------------------------ | -------------- | ------------ | ------------------------- |
+| GET         | `/api/products/:productId` |                                            |                | 400          | List details of a product |
+| POST        | `/api/products/`           | { name, store, img, price, stock, status } |                | 400          | Create a Product          |
+| PUT         | `/api/products/:productId` | { name, store, img, price, stock, status } |                | 400          | update a Product          |
+| Delete      | `/api/products/:productId` |                                            |                | 400          | Delete a Product          |
 
 ### Orders
 
-| HTTP Method | URL                        | Request Body                           | Success status | Error Status | Description                   |
-| ----------- | -------------------------- | -------------------------------------- | -------------- | ------------ | ----------------------------- |
-| GET         | `/api/orders/:id`          |                                        |                |              | List details of an order      |
-| GET         | `/api/orders/user/:userId` |                                        |                |              | Get all orders for given user |
-| POST        | `/api/orders`              | {products, user, store, status, total} |                |              | Place an order                |
-| PUT         | `/api/orders/:id`          | {status}                               |                |              | Update an order status        |
-| DELETE      | `/api/orders/:id`          |                                        |                |              | Delete an order               |
-
-### Driver
-
-| HTTP Method | URL                  | Request Body            | Success status | Error Status | Description                          |
-| ----------- | -------------------- | ----------------------- | -------------- | ------------ | ------------------------------------ |
-| GET         | `/api/driver`        |                         |                | 400          | show driver profile details          |
-| PUT         | `/api/driver/:id`    | { name, img, location } | 200            | 404          | Update the driver profile details    |
-| POST        | `/api/driver/`       | { name, img, location } | 200            | 404          | Create Driver account                |
-| GET         | `/api/driver/orders` |                         |                |              | List all orders ready for delivering |
+| HTTP Method | URL                            | Request Body                                       | Success status | Error Status | Description                                             |
+| ----------- | ------------------------------ | -------------------------------------------------- | -------------- | ------------ | ------------------------------------------------------- |
+| GET         | `/api/orders`                  |                                                    |                | 404          | Get all orders                                          |
+| GET         | `/api/orders/:orderId`         |                                                    |                | 404          | List details of an order                                |
+| GET         | `/api/orders/user/:userId`     |                                                    |                | 404          | Get all orders for given user                           |
+| GET         | `/api/orders/driver/:driverId` |                                                    |                | 404          | Get all orders for given driver                         |
+| POST        | `/api/orders`                  | { store, user, products, status, total, shipping } |                | 400          | Create a new order                                      |
+| PUT         | `/api/orders/:orderId`         | { status, products, total, driver }                |                | 400          | Update an order - receives only one product per request |
+| DELETE      | `/api/orders/:orderId`         |                                                    |                |              | Delete an order                                         |
 
 <br>
 
-## API's
+## Technologies and API's
 
-<br>
+### Frontend
+
+- [Vite](https://vitejs.dev/guide/) - Built on React
+- [axios](https://www.npmjs.com/package/axios)
+- [chakra-ui/react
+  ](https://www.npmjs.com/package/@chakra-ui/react)
+- [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+- [react-toastify](https://www.npmjs.com/package/react-toastify)
+- [@react-google-maps/api](https://www.npmjs.com/package/@react-google-maps/api)
+- [Google Maps Reverse Geocoding](https://developers.google.com/maps/documentation/geocoding/requests-reverse-geocoding)
+- [Deployed on Netlify](https://app.netlify.com/)
+
+### Backend
+
+- [Express](https://www.npmjs.com/package/express)
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [express-jwt](https://www.npmjs.com/package/express-jwt)
+- [Mongoose](https://www.npmjs.com/package/mongoose)
+- [Cloudinary](https://www.npmjs.com/package/cloudinary)
+- [multer](https://www.npmjs.com/package/multer)
+- [multer-storage-cloudinary](https://www.npmjs.com/package/multer-storage-cloudinary)
+
+### Database
+
+- [MongoDB](https://www.mongodb.com/atlas/database)
+
+  <br>
 
 ## Links
 
 ### Trello/Kanban
 
-[Link to your trello board](https://trello.com/b/xIR9t7e0/plant-delivery) or a picture of your physical board
+[Link to your trello board](https://trello.com/b/xIR9t7e0/plant-delivery)
 
-### Git
-
-The url to your repository and to your deployed project
+### GitHub
 
 [Client repository Link](https://github.com/pedro-louro/green-bridge-client)
 
 [Server repository Link](https://github.com/pedro-louro/green-bridge-server)
 
-[Deployed App Link](http://heroku.com)
-
-### Slides
-
-[Slides Link](http://slides.com) - The url to your _public_ presentation slides
-
 ### Contributors
 
-FirstName LastName - <github-username> - <linkedin-profile-link>
+Pedro Louro
 
-FirstName LastName - <github-username> - <linkedin-profile-link>
+- <https://github.com/pedro-louro>
+- <https://www.linkedin.com/in/pedro-dlouro/>

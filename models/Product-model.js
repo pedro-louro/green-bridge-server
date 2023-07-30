@@ -5,6 +5,10 @@ const ProductSchema = new Schema({
   img: { type: String },
   store: { type: Schema.Types.ObjectId, ref: 'Store', required: true },
   price: { type: Number, required: true },
-  stock: { type: Number }
+  stock: { type: Number },
+  status: {
+    type: String,
+    enum: ['enabled', 'disabled', 'deleted']
+  }
 });
 module.exports = model('Product', ProductSchema);
