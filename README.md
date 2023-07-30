@@ -1,4 +1,4 @@
-# Green Bridge
+# Project Name
 
 [Green Bridge App ](https://green-bridge.netlify.app/)
 
