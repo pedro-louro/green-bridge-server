@@ -47,16 +47,26 @@ router.post('/products', async (req, res, next) => {
 // Update the Product Details
 
 router.put('/products/:productId', async (req, res, next) => {
-  const { name, img, price, stock } = req.body;
+  const { name, img, price, stock, status } = req.body;
   const { productId } = req.params;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
       return res.status(400).json({ message: 'Please use a valid ID' });
     }
+    if (
+      status !== 'enabled' &&
+      status !== 'disabled' &&
+      status !== 'deleted'
+
+    ) {
+      return res
+        .status(400)
+        .json({ message: 'Please use a valid Product Status' });
+    }
     const updateProduct = await Product.findByIdAndUpdate(
       productId,
-      { name, img, price, stock },
+      { name, img, price, stock, status },
       { new: true }
     ).populate('store');
     res.json(updateProduct);
